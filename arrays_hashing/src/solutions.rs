@@ -1,4 +1,3 @@
-use std::collections::HashMap;
 use std::collections::HashSet;
 
 pub fn contains_duplicate(nums: Vec<i32>) -> bool {
@@ -11,22 +10,12 @@ pub fn is_anagram(s: String, t: String) -> bool {
         return false;
     }
 
-    let mut char_map = HashMap::<char, i32>::new();
-    for (s_char, t_char) in s.chars().zip(t.chars()) {
-        if s_char == t_char {
-            continue;
-        }
+    let mut chars = [0; 26];
 
-        char_map
-            .entry(s_char)
-            .and_modify(|count| *count += 1)
-            .or_insert(1);
+    s.bytes().zip(t.bytes()).for_each(|(u, v)| {
+        chars[(u - b'a') as usize] += 1;
+        chars[(v - b'a') as usize] -= 1;
+    });
 
-        char_map
-            .entry(t_char)
-            .and_modify(|count| *count -= 1)
-            .or_insert(-1);
-    }
-
-    char_map.values().all(|&count| count == 0)
+    chars.iter().all(|&c| c == 0)
 }
