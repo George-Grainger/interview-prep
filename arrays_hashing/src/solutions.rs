@@ -34,17 +34,19 @@ pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
 }
 
 pub fn group_anagrams(strs: Vec<String>) -> Vec<Vec<String>> {
-    let mut anagrams: Vec<Vec<String>> = vec![];
+    let mut anagrams: HashMap<[u8; 26], Vec<String>> = HashMap::with_capacity(strs.len());
 
-    'outer: for candidate in strs {
-        for seen_anagrams in anagrams.iter_mut() {
-            if is_anagram(candidate.to_string(), seen_anagrams[0].to_string()) {
-                seen_anagrams.push(candidate.to_string());
-                continue 'outer;
-            }
-        }
-        anagrams.push(vec![candidate.to_string()]);
+    for candidate in strs.into_iter() {
+        let mut chars: [u8; 26] = [0; 26];
+        candidate.bytes().for_each(|c| {
+            chars[(c - b'a') as usize] += 1;
+        });
+
+        anagrams
+            .entry(chars)
+            .and_modify(|seen| seen.push(candidate.clone()))
+            .or_insert(vec![candidate]);
     }
 
-    return anagrams;
+    anagrams.into_values().collect()
 }
