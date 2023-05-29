@@ -24,10 +24,10 @@ pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
         let mut seen: HashMap<i32, usize> = HashMap::new();
 
         for (i, n) in nums.iter().enumerate() {
-            if let Some(p) = seen.get(n) {
-                return vec![*p as i32, i as i32];
-            }
-            seen.insert(target - n, i);
+            match seen.get(n) {
+                Some(&p) => return vec![p as i32, i as i32],
+                None => seen.insert(target - n, i),
+            };
         }
         
         unreachable!("Result should have been found");
