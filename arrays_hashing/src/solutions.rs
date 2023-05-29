@@ -1,4 +1,4 @@
-use std::collections::HashSet;
+use std::collections::{HashSet, HashMap};
 
 pub fn contains_duplicate(nums: Vec<i32>) -> bool {
     let mut seen = HashSet::<i32>::new();
@@ -19,3 +19,16 @@ pub fn is_anagram(s: String, t: String) -> bool {
 
     chars.iter().all(|&c| c == 0)
 }
+
+pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
+        let mut seen: HashMap<i32, usize> = HashMap::new();
+
+        for (i, n) in nums.iter().enumerate() {
+            if let Some(p) = seen.get(n) {
+                return vec![*p as i32, i as i32];
+            }
+            seen.insert(target - n, i);
+        }
+        
+        unreachable!("Result should have been found");
+    }
