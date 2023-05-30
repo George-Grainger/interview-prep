@@ -50,3 +50,24 @@ pub fn group_anagrams(strs: Vec<String>) -> Vec<Vec<String>> {
 
     anagrams.into_values().collect()
 }
+
+pub fn top_k_frequent(nums: Vec<i32>, k: i32) -> Vec<i32> {
+    // Want to use a ordered heap somehow - or hash and sort?
+
+    let mut counts: HashMap<i32, i32> = HashMap::new();
+    for num in nums {
+        counts
+            .entry(num)
+            .and_modify(|count| *count += 1)
+            .or_insert(1);
+    }
+
+    let mut sorted_counts: Vec<(&i32, &i32)> = counts.iter().collect();
+    sorted_counts.sort_by(|a, b| b.1.cmp(a.1));
+
+    sorted_counts
+        .into_iter()
+        .take(k as usize)
+        .map(|(&a, _)| a)
+        .collect()
+}

@@ -25,17 +25,19 @@ mod tests {
     #[test]
     fn test_group_anagrams() {
         assert_eq!(
-            group_anagrams(vec![
-                "eat".to_string(),
-                "tea".to_string(),
-                "tan".to_string(),
-                "ate".to_string(),
-                "nat".to_string(),
-                "bat".to_string()
-            ]),
-            vec![vec!["bat"], vec!["nat", "tan"], vec!["ate", "eat", "tea"]]
+            group_anagrams(
+                vec!["eat", "tea", "tan", "ate", "nat", "bat"]
+                    .into_iter()
+                    .map(|s| s.to_string())
+                    .collect()
+            ),
+            vec![vec!["bat"], vec!["eat", "tea", "ate"], vec!["tan", "nat"]]
         );
-        // assert_eq!(group_anagrams(vec![3, 2, 4], 6), vec![1, 2]);
-        // assert_eq!(group_anagrams(vec![3, 3], 6), vec![0, 1]);
+    }
+
+    #[test]
+    fn test_top_k_frequent() {
+        assert_eq!(top_k_frequent(vec![1, 1, 1, 2, 2, 3], 2), vec![1, 2]);
+        assert_eq!(top_k_frequent(vec![1], 2), vec![1]);
     }
 }
