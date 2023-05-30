@@ -1,4 +1,4 @@
-use std::collections::{HashMap, HashSet};
+use std::collections::{BinaryHeap, HashMap, HashSet};
 
 pub fn contains_duplicate(nums: Vec<i32>) -> bool {
     let mut seen: HashSet<i32> = HashSet::new();
@@ -52,8 +52,6 @@ pub fn group_anagrams(strs: Vec<String>) -> Vec<Vec<String>> {
 }
 
 pub fn top_k_frequent(nums: Vec<i32>, k: i32) -> Vec<i32> {
-    // Want to use a ordered heap somehow - or hash and sort?
-
     let mut counts: HashMap<i32, i32> = HashMap::new();
     for num in nums {
         counts
@@ -61,13 +59,11 @@ pub fn top_k_frequent(nums: Vec<i32>, k: i32) -> Vec<i32> {
             .and_modify(|count| *count += 1)
             .or_insert(1);
     }
+    let counts: Vec<(i32, i32)> = counts.into_iter().map(|(a, b)| (b, a)).collect();
+    let mut maxheap: BinaryHeap<(i32, i32)> = BinaryHeap::from(counts);
 
-    let mut sorted_counts: Vec<(&i32, &i32)> = counts.iter().collect();
-    sorted_counts.sort_by(|a, b| b.1.cmp(a.1));
-
-    sorted_counts
-        .into_iter()
-        .take(k as usize)
-        .map(|(&a, _)| a)
+    (0..k)
+        .filter_map(|_| maxheap.pop())
+        .map(|(_, v)| v)
         .collect()
 }
