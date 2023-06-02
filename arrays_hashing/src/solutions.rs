@@ -69,14 +69,18 @@ pub fn top_k_frequent(nums: Vec<i32>, k: i32) -> Vec<i32> {
 }
 
 pub fn product_except_self(nums: Vec<i32>) -> Vec<i32> {
-    let mut output: Vec<i32> = vec![1; nums.len()];
-    for (i, num) in nums.into_iter().enumerate() {
-        for j in 0..output.len() {
-            if i != j {
-                output[j] *= num;
-            }
-        }
+    let mut forward: Vec<i32> = vec![1; nums.len()];
+    let mut backward: Vec<i32> = vec![1; nums.len()];
+    let range = 0..nums.len() - 1;
+    let range_rev = (1..nums.len()).rev();
+    for (i, j) in range.zip(range_rev) {
+        forward[i + 1] = forward[i] * nums[i];
+        backward[j - 1] = backward[j] * nums[j];
     }
 
-    output
+    forward
+        .iter()
+        .zip(backward)
+        .map(|(v1, v2)| v1 * v2)
+        .collect()
 }
