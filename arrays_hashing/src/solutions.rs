@@ -1,7 +1,7 @@
 use std::collections::{BinaryHeap, HashMap, HashSet};
 
 pub fn contains_duplicate(nums: Vec<i32>) -> bool {
-    let mut seen: HashSet<i32> = HashSet::new();
+    let mut seen: HashSet<i32> = HashSet::with_capacity(nums.len());
     nums.iter().any(|&num| !seen.insert(num))
 }
 
@@ -66,4 +66,17 @@ pub fn top_k_frequent(nums: Vec<i32>, k: i32) -> Vec<i32> {
         .filter_map(|_| maxheap.pop())
         .map(|(_, v)| v)
         .collect()
+}
+
+pub fn product_except_self(nums: Vec<i32>) -> Vec<i32> {
+    let mut output: Vec<i32> = vec![1; nums.len()];
+    for (i, num) in nums.into_iter().enumerate() {
+        for j in 0..output.len() {
+            if i != j {
+                output[j] *= num;
+            }
+        }
+    }
+
+    output
 }

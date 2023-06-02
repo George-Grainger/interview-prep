@@ -25,7 +25,7 @@ mod tests {
     #[test]
     fn test_group_anagrams() {
         // Need to fix this to allow any order
-        
+
         assert_eq!(
             group_anagrams(
                 vec!["eat", "tea", "tan", "ate", "nat", "bat"]
@@ -41,5 +41,14 @@ mod tests {
     fn test_top_k_frequent() {
         assert_eq!(top_k_frequent(vec![1, 1, 1, 2, 2, 3], 2), vec![1, 2]);
         assert_eq!(top_k_frequent(vec![1], 2), vec![1]);
+    }
+
+    #[test]
+    fn test_product_except_self() {
+        assert_eq!(product_except_self(vec![1, 2, 3, 4]), vec![24, 12, 8, 6]);
+        assert_eq!(
+            product_except_self(vec![-1, 1, 0, -3, 3]),
+            vec![0, 0, 9, 0, 0]
+        );
     }
 }
