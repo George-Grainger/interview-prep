@@ -71,9 +71,12 @@ pub fn top_k_frequent(nums: Vec<i32>, k: i32) -> Vec<i32> {
 pub fn product_except_self(nums: Vec<i32>) -> Vec<i32> {
     let mut result: Vec<i32> = vec![1; nums.len()];
 
+    let forward_range = 0..nums.len();
+    let backward_range = (0..nums.len()).rev();
+
     let mut left_acc: i32 = 1;
     let mut right_acc: i32 = 1;
-    for (i, j) in (0..nums.len()).zip((0..nums.len()).rev()) {
+    for (i, j) in forward_range.zip(backward_range) {
         result[i] *= left_acc;
         result[j] *= right_acc;
 
