@@ -83,3 +83,31 @@ pub fn product_except_self(nums: Vec<i32>) -> Vec<i32> {
 
     result
 }
+
+pub fn is_valid_sudoku(board: Vec<Vec<char>>) -> bool {
+    const SIZE: usize = 9;
+    let mut can_place = [[[true; 9]; SIZE]; SIZE];
+
+    for (i, row) in board.iter().enumerate() {
+        for (j, &c) in row.iter().enumerate() {
+            if c == '.' {
+                continue;
+            }
+
+            let seen = c as usize - '1' as usize;
+            if !can_place[i][j][seen] {
+                return false;
+            }
+
+            let cell = [j / 3, i / 3];
+            for k in 0..SIZE {
+                let p = 3 * cell[0] + (k % 3);
+                let q = 3 * cell[1] + (k / 3);
+                can_place[i][k][seen] = false;
+                can_place[k][j][seen] = false;
+                can_place[q][p][seen] = false;
+            }
+        }
+    }
+    true
+}
