@@ -38,26 +38,22 @@ fn test_string_decode() {
 fn string_decode(message: String) -> Vec<String> {
     let mut output: Vec<String> = Vec::new();
 
-    if message.len() < 2 {
-        output.push(message);
-        return output;
-    }
-
     let mut chars = message.chars();
     let mut word = "".to_string();
-    let mut prev: char = '\0';
     while let Some(current) = chars.next() {
-        if current == ';' && prev == ':' {
-            output.push(word.clone());
-            word.clear();
-        } else if current != ':' || (current == ':' && prev == ':') {
+        if current != ':' {
             word.push(current);
-
-            if prev == ':' {
-                chars.next();
-            }
+            continue;
         }
-        prev = current;
+
+        match chars.next() {
+            Some(':') => word = ":".to_string(),
+            Some(';') => {
+                output.push(word.clone());
+                word.clear();
+            }
+            _ => (),
+        }
     }
     output.push(word);
 
