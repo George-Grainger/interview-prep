@@ -1,16 +1,11 @@
-mod solutions;
-mod tests;
-
-use solutions::*;
+mod contains_duplicate;
+mod group_anagrams;
+mod product_except_self;
+mod top_k_frequent;
+mod two_sum;
+mod valid_anagram;
+mod valid_sudoku;
 
 fn main() {
-    let output = group_anagrams(vec![
-        "eat".to_string(),
-        "tea".to_string(),
-        "tan".to_string(),
-        "ate".to_string(),
-        "nat".to_string(),
-        "bat".to_string(),
-    ]);
-    println!("{:?}", output)
+    println!("To execute one of the programs run cargo test");
 }
