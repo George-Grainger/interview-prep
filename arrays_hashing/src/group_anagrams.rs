@@ -21,7 +21,7 @@ fn test_group_anagrams() {
     assert_eq!(expected, actual);
 }
 
-pub fn group_anagrams(strs: Vec<String>) -> Vec<Vec<String>> {
+fn group_anagrams(strs: Vec<String>) -> Vec<Vec<String>> {
     let mut anagrams: HashMap<[u8; 26], Vec<String>> = HashMap::with_capacity(strs.len());
 
     for candidate in strs.into_iter() {

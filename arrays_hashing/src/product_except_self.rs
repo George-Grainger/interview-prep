@@ -9,7 +9,7 @@ fn test_product_except_self() {
     );
 }
 
-pub fn product_except_self(nums: Vec<i32>) -> Vec<i32> {
+fn product_except_self(nums: Vec<i32>) -> Vec<i32> {
     let mut result: Vec<i32> = vec![1; nums.len()];
 
     nums.iter().enumerate().rev().fold(1, |acc, (i, &num)| {

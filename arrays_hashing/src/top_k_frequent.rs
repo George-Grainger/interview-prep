@@ -8,7 +8,7 @@ fn test_top_k_frequent() {
     assert_eq!(top_k_frequent(vec![1], 2), vec![1]);
 }
 
-pub fn top_k_frequent(nums: Vec<i32>, k: i32) -> Vec<i32> {
+fn top_k_frequent(nums: Vec<i32>, k: i32) -> Vec<i32> {
     let mut counts: HashMap<i32, i32> = HashMap::new();
     for num in nums {
         counts

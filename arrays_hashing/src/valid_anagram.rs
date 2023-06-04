@@ -6,7 +6,7 @@ fn test_is_anagram() {
     assert!(!is_anagram("rat".to_string(), "car".to_string()));
 }
 
-pub fn is_anagram(s: String, t: String) -> bool {
+fn is_anagram(s: String, t: String) -> bool {
     if s.len() != t.len() {
         return false;
     }

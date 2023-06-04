@@ -29,7 +29,7 @@ fn test_is_valid_sudoku() {
     assert!(!is_valid_sudoku(grid2));
 }
 
-pub fn is_valid_sudoku(board: Vec<Vec<char>>) -> bool {
+fn is_valid_sudoku(board: Vec<Vec<char>>) -> bool {
     const SIZE: usize = 9;
     let mut rows = vec![std::collections::HashSet::with_capacity(9); SIZE];
     let mut cols = vec![std::collections::HashSet::with_capacity(9); SIZE];
