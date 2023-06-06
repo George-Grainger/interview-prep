@@ -30,16 +30,19 @@ pub fn string_encode(strs: Vec<String>) -> String {
 #[test]
 fn test_string_decode() {
     assert_eq!(
-        string_decode("we:;say:;:::;yes".to_string()),
+        string_decode(String::from("we:;say:;:::;yes")),
         vec!["we", "say", ":", "yes"]
     );
+
+    assert_eq!(string_decode(String::from("")), vec![""]);
+    assert_eq!(string_decode(String::from("test")), vec!["test"]);
 }
 
 fn string_decode(message: String) -> Vec<String> {
     let mut output: Vec<String> = Vec::new();
-
     let mut chars = message.chars();
-    let mut word = "".to_string();
+
+    let mut word = String::from("");
     while let Some(current) = chars.next() {
         if current != ':' {
             word.push(current);
@@ -47,7 +50,7 @@ fn string_decode(message: String) -> Vec<String> {
         }
 
         match chars.next() {
-            Some(':') => word = ":".to_string(),
+            Some(':') => word = String::from(":"),
             Some(';') => {
                 output.push(word.clone());
                 word.clear();
