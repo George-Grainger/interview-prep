@@ -1,6 +1,6 @@
 // Solution for: https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/
 
-use std::collections::HashMap;
+use std::cmp::Ordering;
 
 #[test]
 fn test_two_sum_sorted() {
@@ -10,14 +10,15 @@ fn test_two_sum_sorted() {
 }
 
 fn two_sum_sorted(numbers: Vec<i32>, target: i32) -> Vec<i32> {
-    let mut map: HashMap<i32, usize> = HashMap::with_capacity(numbers.len());
+    let mut i = 0;
+    let mut j = numbers.len() - 1;
 
-    for (i, num) in numbers.iter().enumerate() {
-        match map.get(num) {
-            Some(val) => return vec![(val + 1) as i32, (i + 1) as i32],
-            None => map.insert(target - num, i),
-        };
+    while i < j {
+        match (numbers[i] + numbers[j]).cmp(&target) {
+            Ordering::Less => i += 1,
+            Ordering::Greater => j -= 1,
+            Ordering::Equal => return vec![(i + 1) as i32, (j + 1) as i32],
+        }
     }
-
     unreachable!("Should be exactly one solution");
 }
