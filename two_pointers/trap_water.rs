@@ -1,4 +1,4 @@
-// Solution for: https://leetcode.com/problems/trapping-rain-water/submissions/
+// Solution for: https://leetcode.com/problems/trapping-rain-water/
 
 use std::cmp;
 
@@ -17,27 +17,25 @@ fn test_trap_water() {
 }
 
 fn trap_water(height: Vec<i32>) -> i32 {
-    let mut max_index: usize = 0;
-    let mut max_block: i32 = 0;
-    let mut increment: i32 = 0;
-    let mut total: i32 = 0;
-
-    for (i, &block) in height.iter().enumerate() {
-        if block >= max_block {
-            max_block = block;
-            max_index = i;
-            total += increment;
-            increment = 0;
-        } else {
-            increment += max_block - block;
-        }
+    if height.is_empty() {
+        return 0;
     }
 
-    if increment > 0 {
-        max_block = 0;
-        for &block in height[max_index..].into_iter().rev() {
-            max_block = cmp::max(block, max_block);
-            total += max_block - block;
+    let mut lp = 0;
+    let mut rp = height.len() - 1;
+    let mut left_max = height[lp];
+    let mut right_max = height[rp];
+    let mut total = 0;
+
+    while lp < rp {
+        if left_max < right_max {
+            lp += 1;
+            left_max = cmp::max(left_max, height[lp]);
+            total += left_max - height[lp];
+        } else {
+            rp -= 1;
+            right_max = cmp::max(right_max, height[rp]);
+            total += right_max - height[rp];
         }
     }
 

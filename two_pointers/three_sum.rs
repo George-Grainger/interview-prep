@@ -1,3 +1,5 @@
+// Solution for: https://leetcode.com/problems/3sum/
+
 #[test]
 fn test_three_sum() {
     assert_eq!(
