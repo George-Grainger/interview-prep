@@ -13,21 +13,18 @@ fn valid_parenthesis(s: String) -> bool {
     }
 
     let mut p_stack: Vec<char> = Vec::with_capacity(s.len() / 2);
-    let mut valid = true;
     for c in s.chars() {
-        valid &= match c {
-            '(' | '{' | '[' => {
-                p_stack.push(c);
-                true
+        match c {
+            '(' => p_stack.push(')'),
+            '{' => p_stack.push('}'),
+            '[' => p_stack.push(']'),
+            ')' | '}' | ']' => {
+                if Some(c) != p_stack.pop() {
+                    return false;
+                }
             }
-            ')' | '}' | ']' => match p_stack.pop() {
-                Some('(') => c == ')',
-                Some('{') => c == '}',
-                Some('[') => c == ']',
-                _ => false,
-            },
             _ => panic!("Invalid character {}", c),
         };
     }
-    valid && p_stack.is_empty()
+    p_stack.is_empty()
 }
