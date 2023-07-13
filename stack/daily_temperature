@@ -23,19 +23,13 @@ fn daily_temperatures(temperatures: Vec<i32>) -> Vec<i32> {
     let mut stack: Vec<i32> = vec![0; temperatures.len()];
 
     for i in (0..temperatures.len() - 1).rev() {
-        let mut total_steps = 1;
         let mut j = i + 1;
-        while temperatures[i] >= temperatures[j] {
-            if stack[j] == 0 {
-                total_steps = 0;
-                break;
-            } else {
-                total_steps += stack[j];
-                j += stack[j] as usize;
-            }
+        while temperatures[i] >= temperatures[j] && stack[j] != 0 {
+            j += stack[j] as usize;
         }
-        stack[i] = total_steps;
+        if temperatures[i] < temperatures[j] {
+            stack[i] = (j - i) as i32;
+        }
     }
-
     stack
 }
