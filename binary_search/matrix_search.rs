@@ -33,3 +33,7 @@ fn search_matrix(matrix: Vec<Vec<i32>>, target: i32) -> bool {
     }
     false
 }
+
+fn search_matrix_alt(matrix: Vec<Vec<i32>>, target: i32) -> bool {
+    matrix.concat().binary_search(&target).is_ok() // One line solution but less memory efficient
+}
