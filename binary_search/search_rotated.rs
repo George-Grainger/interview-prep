@@ -37,18 +37,14 @@ fn search_rotated(nums: Vec<i32>, target: i32) -> i32 {
         let middle = (left + right) / 2;
         if nums[middle] == target {
             return middle as i32;
-        } else if nums[middle] < target {
-            if nums[left] > target || nums[left] < nums[middle] {
-                left = middle + 1;
-            } else {
-                right = middle;
-            }
+        }
+
+        if (nums[middle] >= nums[left]) && (target > nums[middle] || target < nums[left]) {
+            left = middle + 1;
+        } else if target < nums[middle] || target > nums[right] {
+            right = middle - 1;
         } else {
-            if nums[left] > target && nums[right - 1] < nums[middle] {
-                left = middle + 1;
-            } else {
-                right = middle;
-            }
+            left = middle + 1;
         }
     }
     -1
