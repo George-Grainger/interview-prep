@@ -1,7 +1,5 @@
 // Solution to: https://leetcode.com/problems/permutation-in-string/
 
-use std::collections::HashMap;
-
 #[test]
 fn test_check_inclusion() {
     let s1 = String::from("ab");
@@ -22,26 +20,24 @@ fn test_check_inclusion() {
 }
 
 fn check_inclusion(s1: String, s2: String) -> bool {
-    let mut s1_counts: [usize; 26] = [0; 26];
+    let s1 = s1.as_bytes();
+    let s2 = s2.as_bytes();
 
-    for c in s1.as_bytes() {
-        let idx = (c - b'a') as usize;
-        s1_counts[idx] += 1;
+    let mut s1_counts: [usize; 26] = [0; 26];
+    let mut s2_counts: [usize; 26] = [0; 26];
+
+    for byte_char in s1 {
+        s1_counts[(byte_char - b'a') as usize] += 1;
     }
 
-    for win in s2.as_bytes().windows(s1.len()) {
-        let mut letters = s1_counts.clone();
-        let mut is_match = true;
-        for c in win {
-            let idx = (c - b'a') as usize;
-            if letters[idx] == 0 {
-                is_match = false;
-                break;
-            } else {
-                letters[idx] -= 1;
-            }
+    let mut left = 0;
+    for right in 0..s2.len() {
+        s2_counts[(s2[right] - b'a') as usize] += 1;
+        if right - left == s1.len() {
+            s2_counts[(s2[left] - b'a') as usize] -= 1;
+            left += 1;
         }
-        if is_match {
+        if s2_counts.eq(&s1_counts) {
             return true;
         }
     }
