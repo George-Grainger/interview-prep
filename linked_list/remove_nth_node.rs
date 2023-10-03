@@ -18,29 +18,3 @@ fn remove_nth_from_end(head: Option<Box<ListNode>>, n: i32) -> Option<Box<ListNo
     slow.next = slow.next.as_mut().unwrap().next.take();
     pre_head.next
 }
-
-// Similar C++
-// ListNode* removeNthFromEnd(ListNode* head, int n) {
-//     ListNode* runner = head;
-
-//     // Go one further than necessary to remove the node
-//     for(int i = 0; i < n; i++){
-//         runner = runner->next;
-//     }
-
-//     if (runner == nullptr) {
-//         return head->next;
-//     }
-
-//     // Move to one in front of the node to remove
-//     ListNode* chaser = head;
-//     while(runner->next != nullptr) {
-//         runner = runner->next;
-//         chaser = chaser->next;
-//     }
-
-//     // Update the node - memory leak?
-//     // Maybe want to actually delete the node?
-//     chaser->next = chaser->next->next;
-//     return head;
-// }
