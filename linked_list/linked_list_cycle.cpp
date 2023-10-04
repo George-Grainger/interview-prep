@@ -4,17 +4,17 @@
 
 bool hasCycle(ListNode *head)
 {
-    ListNode *current = head;
+    ListNode *slow = head;
+    ListNode *fast = head;
 
-    while (current != nullptr)
+    while (fast != nullptr && fast->next != nullptr)
     {
-        ListNode *next = current->next;
-        if (current == next)
+        slow = slow->next;
+        fast = fast->next->next;
+        if (fast == slow)
         {
             return true;
         }
-        current->next = current;
-        current = next;
     }
 
     return false;
