@@ -1,19 +1,13 @@
 /// Solution for: https://leetcode.com/problems/palindrome-number/
 
 fn is_palindrome(x: i32) -> bool {
-    let x = x.to_string();
-    let mut bytes = x.bytes();
+    let mut num = x;
+    let mut reversed = 0;
 
-    loop {
-        let front = bytes.next();
-        let back = bytes.next_back();
-
-        if front.is_none() || back.is_none() {
-            return true;
-        }
-
-        if front != back {
-            return false;
-        }
+    while num > 0 {
+        reversed = 10 * reversed + num % 10;
+        num /= 10;
     }
+
+    x == reversed
 }
