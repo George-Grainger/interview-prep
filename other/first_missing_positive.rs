@@ -1,34 +1,29 @@
 /// Naive solution for: https://leetcode.com/problems/first-missing-positive/
 
 impl Solution {
-    pub fn first_missing_positive(nums: Vec<i32>) -> i32 {
-        let mut lowest = i32::MAX;
-        let mut highest = 0;
-        let mut sum = 0;
+    pub fn first_missing_positive(mut nums: Vec<i32>) -> i32 {
+        let n = nums.len() as i32;
+        let mut i = 0;
 
-        for num in nums {
-            if num > 0 {
-                lowest = lowest.min(num);
-                highest = highest.max(num);
-                sum += num;
+        // Swap numbers into their position in the array
+        while i < nums.len() {
+            if nums[i] > 0 && nums[i] <= n && nums[nums[i] as usize - 1] != nums[i] {
+                let j = nums[i] as usize - 1;
+                nums.swap(i, j);
+            } else {
+                i += 1;
             }
         }
 
-        // If 1 hasn't been seen return this
-        if lowest != 1 {
-            return 1;
+        // Find the first that isn't correctly positioned
+        for (i, &num) in nums.iter().enumerate() {
+            let i_32 = i as i32;
+            if num != i_32 + 1 {
+                return i_32 + 1;
+            }
         }
 
-        // Calculate difference between expected sum and seen sum
-        let expected_sum = (highest) * (highest + 1) / 2;
-        let diff = expected_sum - sum;
-
-        // If there's no difference the next value is the first missing
-        // Otherwise the difference is the missing number
-        if diff == 0 {
-            highest + 1
-        } else {
-            diff
-        }
+        // If they all are return the next positive number
+        n + 1
     }
 }
